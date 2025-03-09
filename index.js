@@ -20,6 +20,12 @@ const todoActions = {
     delete: todoItem => {
         todoListActions.updateTodoList('delete', todoItem);
         todoListActions.renderTodoList();
+    },
+
+    markAsDone: ({ isDone }, todoText, todoCheckbox) => {
+        todoCheckbox.checked = isDone;
+        if (isDone) todoText.classList.add('done');
+        else todoText.classList.remove('done');
     }
 }
 
@@ -76,12 +82,13 @@ const elements = {
         //handling checkbox - checked, unchecked events
         todoCheckbox.onchange = function () {
             todoItem.isDone = this.checked;
+            todoCheckbox.checked = todoItem.isDone;
+            todoActions.markAsDone(todoItem, todoText, todoCheckbox);
             todoActions.update(todoItem);
         };
-        if (todoItem.isDone) {
-            todoText.classList.add('done');
-            todoCheckbox.checked = todoItem.isDone;
-        }
+
+        //mark a todo item if it is already done
+        todoActions.markAsDone(todoItem, todoText, todoCheckbox);
 
         //handling delete button click
         todoDeleteBtn.onclick = () => todoActions.delete(todoItem);
