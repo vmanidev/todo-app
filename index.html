@@ -16,17 +16,13 @@
     <h1>Todo App</h1>
     <div>
       <div>
-        <input
-          id="add-todo-input"
-          type="text"
-          onkeyup="todoActions.add(event)"
-        />
-        <button>
-          <i class="fa-solid fa-moon"></i>
-          <i class="fa-solid fa-sun"></i>
-        </button>
-      </div>
-      <ul id="todo-list"></ul>
+      <input
+        id="add-todo-input"
+        type="text"
+        onkeyup="todoActions.add(event)"
+        placeholder="Got something to do? Type and press Enter!"
+      />
+      <ul id="todo-list" class="todo-container"></ul>
     </div>
   </body>
 </html>
