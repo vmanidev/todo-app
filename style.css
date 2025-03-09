@@ -28,7 +28,7 @@ h1 {
   gap: 0.5rem;
 }
 
-/* .main-container .header styling  */
+/* .main-container .header style  */
 .main-container {
   align-content: center;
   display: grid;
@@ -44,8 +44,8 @@ h1 {
   align-items: center;
 }
 
-/* add todo input field styling */
-.main-container #add-todo-input {
+/* add todo input field style */
+:is(#add-todo-input, #edit-todo-input) {
   width: 100%;
   border-radius: 0.5rem;
   outline: none;
@@ -57,15 +57,41 @@ h1 {
   box-sizing: border-box;
 }
 
-.main-container #add-todo-input::placeholder {
+:is(#add-todo-input::placeholder, #edit-todo-input::placeholder) {
   color: var(--secondary-text-color);
 }
 
-.main-container #add-todo-input:focus {
+:is(#add-todo-input:focus, #edit-todo-input:focus) {
   border-color: var(--accent-color);
 }
 
-/* todo list styling  */
+/* edit todo popup style */
+#edit-todo-popup {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#edit-todo-popup .edit-todo-container {
+  display: flex;
+  flex-direction: column;
+  background: var(--background-color);
+  width: 60%;
+  height: 150px;
+  margin: 5rem auto;
+  padding: 2rem;
+}
+
+.hint {
+  color: var(--secondary-text-color);
+}
+
+/* todo list style  */
 .main-container #todo-list {
   list-style: none;
   padding: 0;
@@ -74,7 +100,7 @@ h1 {
 
 .main-container #todo-list li {
   display: grid;
-  grid-template-columns: 1.5rem 1fr 1rem;
+  grid-template-columns: 1.5rem 1fr 1rem 1rem;
   gap: 1rem;
   margin-bottom: 1rem;
   align-items: center;
@@ -84,7 +110,7 @@ h1 {
   overflow-wrap: anywhere;
 }
 
-/* checkbox styling */
+/* checkbox style */
 .main-container #todo-list li input[type="checkbox"] {
   border: 2px solid var(--primary-text-color);
   accent-color: var(--primary-text-color);
@@ -93,12 +119,16 @@ h1 {
   cursor: pointer;
 }
 
-/* icon styling */
+/* icon style */
 .fa-solid.fa-trash {
   color: var(--danger-button-color);
 }
 
-:is(.fa-solid.fa-trash, .fa-solid.fa-moon, .fa-solid.fa-sun):hover {
+.fa-solid.fa-pen-to-square {
+  color: var(--primary-button-color);
+}
+
+i:hover {
   cursor: pointer;
   color: var(--accent-color);
 }

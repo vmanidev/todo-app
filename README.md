@@ -1,6 +1,6 @@
-# Todo App
+# To-Do App
 
-A simple & efficient todo application to manage your tasks easily. 
+A simple & efficient To-Do application to manage your tasks easily. 
 
 ## Features
 

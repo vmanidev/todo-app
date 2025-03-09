@@ -1,16 +1,14 @@
 const todoActions = {
     add: ({ key, target: { value } }) => {
+        if (key !== 'Enter') return;
         const addTodoInputEle = document.getElementById('add-todo-input');
         const todoItem = {
-            index: todoListActions.getTodoList().length,
             value,
             isDone: false
         }
-        if (key === 'Enter') {
-            todoListActions.updateTodoList('add', todoItem);
-            todoListActions.renderTodoList();
-            addTodoInputEle.value = '';
-        }
+        todoListActions.updateTodoList('add', todoItem);
+        todoListActions.renderTodoList();
+        addTodoInputEle.value = '';
     },
 
     update: todoItem => {
@@ -26,11 +24,26 @@ const todoActions = {
         todoCheckbox.checked = isDone;
         if (isDone) todoText.classList.add('done');
         else todoText.classList.remove('done');
+    },
+
+    edit: ({ key, target: { value } }) => {
+        if (key !== 'Enter') return;
+        const todoList = todoListActions.getTodoList();
+        todoList[Number(elements.getEditTodoInputEle().dataset.index)].value = value;
+        todoListActions.syncTodosWithStorage(todoList);
+        todoListActions.renderTodoList();
+        elements.showHideEditTodoPopup({ show: false });
     }
 }
 
 const todoListActions = {
-    getTodoList: () => JSON.parse(localStorage.getItem('todoList')) ?? [],
+    getTodoList: () => {
+        const todoList = JSON.parse(localStorage.getItem('todoList')) ?? [];
+        if (todoList.length > 0) {
+            todoList.map((todoItem, index) => todoItem.index = index);
+        }
+        return todoList;
+    },
 
     updateTodoList: (action, todoItem) => {
         let todoList = todoListActions.getTodoList();
@@ -45,8 +58,10 @@ const todoListActions = {
                 if (item.index === todoItem.index) item.isDone = todoItem.isDone;
             })
         }
-        localStorage.setItem('todoList', JSON.stringify(todoList));
+        todoListActions.syncTodosWithStorage(todoList);
     },
+
+    syncTodosWithStorage: todoList => localStorage.setItem('todoList', JSON.stringify(todoList)),
 
     renderTodoList: () => {
         const todoListEle = document.getElementById('todo-list');
@@ -67,21 +82,26 @@ const display = {
 }
 
 const elements = {
+    getEditTodoInputEle: () => document.getElementById('edit-todo-input'),
+
     createTodoEle: todoItem => {
-        // creating elements (checkbox, text & delete button) and appending them to the list element
+        // create elements (checkbox, text, delete & edit button) and append to the list element
         const todoItemEle = document.createElement('li');
         const todoCheckbox = document.createElement('input');
         const todoText = document.createElement('span');
         const todoDeleteBtn = document.createElement('i');
+        const todoEditBtn = document.createElement('i');
 
         todoItemEle.id = `todo_${todoItem.index}`;
         todoCheckbox.type = 'checkbox';
         todoText.textContent = todoItem.value;
         todoDeleteBtn.classList.add('fa-solid', 'fa-trash');
+        todoEditBtn.classList.add('fa-solid', 'fa-pen-to-square');
 
-        //handling checkbox - checked, unchecked events
-        todoCheckbox.onchange = function () {
-            todoItem.isDone = this.checked;
+        //handle checkbox click
+        todoCheckbox.onchange = $event => {
+            $event.stopImmediatePropagation();
+            todoItem.isDone = $event.target.checked;
             todoCheckbox.checked = todoItem.isDone;
             todoActions.markAsDone(todoItem, todoText, todoCheckbox);
             todoActions.update(todoItem);
@@ -90,12 +110,29 @@ const elements = {
         //mark a todo item if it is already done
         todoActions.markAsDone(todoItem, todoText, todoCheckbox);
 
-        //handling delete button click
-        todoDeleteBtn.onclick = () => todoActions.delete(todoItem);
+        //handle delete button click
+        todoDeleteBtn.onclick = $event => {
+            $event.stopImmediatePropagation();
+            todoActions.delete(todoItem);
+        }
 
-        todoItemEle.append(todoCheckbox, todoText, todoDeleteBtn);
+        //handle edit button click
+        todoEditBtn.onclick = $event => {
+            elements.showHideEditTodoPopup({ show: true });
+            const editTodoInput = elements.getEditTodoInputEle();
+            editTodoInput.value = todoItem.value;
+            editTodoInput.dataset.index = todoItem.index;
+        }
+
+        todoItemEle.append(todoCheckbox, todoText, todoEditBtn, todoDeleteBtn);
 
         return todoItemEle;
+    },
+
+    showHideEditTodoPopup: ({ show = false }) => {
+        const editPopupEle = document.getElementById('edit-todo-popup');
+        if (show) editPopupEle.style.display = 'block';
+        else editPopupEle.style.display = 'none';
     }
 }
 
