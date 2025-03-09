@@ -46,28 +46,41 @@ const todoListActions = {
         const todoListEle = document.getElementById('todo-list');
         todoListEle.innerHTML = '';
         todoListActions.getTodoList().map(todoItem => {
-            todoListEle.appendChild(createTodoEle(todoItem));
+            todoListEle.appendChild(elements.createTodoEle(todoItem));
         })
     }
 }
 
-const createTodoEle = (todoItem) => {
-    const todoItemEle = document.createElement('li');
+const elements = {
+    createTodoEle: todoItem => {
+        // creating elements (checkbox, text & delete button) and appending them to the list element
+        const todoItemEle = document.createElement('li');
+        const todoCheckbox = document.createElement('input');
+        const todoText = document.createElement('span');
+        const todoDeleteBtn = document.createElement('i');
 
-    const todoCheckbox = document.createElement('input');
-    todoCheckbox.setAttribute('type', 'checkbox');
+        todoItemEle.id = `todo_${todoItem.index}`;
+        todoCheckbox.type = 'checkbox';
+        todoText.textContent = todoItem.value;
+        todoDeleteBtn.classList.add('fa-solid', 'fa-trash');
 
-    const todoText = document.createElement('span');
-    todoItemEle.setAttribute('id', 'todo_' + todoItem.index);
-    todoText.textContent = todoItem.value;
+        //handling checkbox - checked, unchecked events
+        todoCheckbox.onchange = function () {
+            todoItem.isDone = this.checked;
+            todoActions.update(todoItem);
+        };
+        if (todoItem.isDone) {
+            todoText.classList.add('done');
+            todoCheckbox.checked = todoItem.isDone;
+        }
 
-    const todoDeleteBtn = document.createElement('button');
-    todoDeleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
-    todoDeleteBtn.onclick = () => todoActions.delete(todoItem);
+        //handling delete button click
+        todoDeleteBtn.onclick = () => todoActions.delete(todoItem);
 
-    todoItemEle.append(todoCheckbox, todoText, todoDeleteBtn);
+        todoItemEle.append(todoCheckbox, todoText, todoDeleteBtn);
 
-    return todoItemEle;
+        return todoItemEle;
+    }
 }
 
 const init = () => {
