@@ -40,7 +40,6 @@ h1 {
 .main-container .header {
   display: grid;
   grid-template-columns: 1fr 2rem;
-  justify-items: center;
   align-items: center;
 }
 
