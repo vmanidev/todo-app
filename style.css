@@ -95,7 +95,6 @@ h1 {
 .main-container #todo-list {
   list-style: none;
   padding: 0;
-  width: fit-content;
 }
 
 .main-container #todo-list li {
@@ -140,6 +139,13 @@ i:hover {
 
 .done {
   text-decoration: line-through;
+  opacity: 0.5;
+}
+
+hr {
+  background-color: var(--accent-color);
+  height: 1px;
+  border: none;
   opacity: 0.5;
 }
 

@@ -30,6 +30,7 @@
         type="text"
         onkeyup="todoActions.add(event)"
         placeholder="Got something to do? Type and hit Enter!"
+        maxlength="100"
       />
       <ul id="todo-list" class="todo-container"></ul>
     </div>
@@ -50,6 +51,7 @@
             id="edit-todo-input"
             type="text"
             onkeyup="todoActions.edit(event)"
+            maxlength="100"
           />
           <small class="hint">Change something? Just type and hit Enter!</small>
         </div>

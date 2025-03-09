@@ -67,7 +67,8 @@ const todoListActions = {
         const todoListEle = document.getElementById('todo-list');
         todoListEle.innerHTML = '';
         todoListActions.getTodoList().map(todoItem => {
-            todoListEle.appendChild(elements.createTodoEle(todoItem));
+            const hrEle = document.createElement('hr');
+            todoListEle.append(elements.createTodoEle(todoItem), hrEle);
         })
     }
 }
