@@ -1,9 +1,18 @@
+/* default mode - light */
 :root {
   --background-color: #fff8e1;
   --primary-text-color: #5d4037;
   --secondary-text-color: #8d6e63;
   --accent-color: #ffb74d;
   --danger-button-color: #e57373;
+}
+
+/* dark mode color scheme */
+.dark-mode {
+  --background-color: #1e2a38;
+  --primary-text-color: #e3f2fd;
+  --secondary-text-color: #90a4ae;
+  --accent-color: #42a5f5;
 }
 
 body {

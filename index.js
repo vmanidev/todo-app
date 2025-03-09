@@ -51,6 +51,15 @@ const todoListActions = {
     }
 }
 
+const display = {
+    toggleMode: () => {
+        const toggleIcon = document.getElementById('toggle-icon');
+        toggleIcon.classList.toggle('fa-sun');
+        toggleIcon.classList.toggle('fa-moon');
+        document.body.classList.toggle('dark-mode');
+    }
+}
+
 const elements = {
     createTodoEle: todoItem => {
         // creating elements (checkbox, text & delete button) and appending them to the list element

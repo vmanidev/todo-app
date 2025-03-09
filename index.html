@@ -13,9 +13,18 @@
     <title>Todo App</title>
   </head>
   <body>
-    <h1>Todo App</h1>
-    <div>
-      <div>
+    <div class="main-container">
+      <div class="header">
+        <h1>
+          <i class="fa-solid fa-list"></i>
+          <span>TODO APP</span>
+        </h1>
+        <i
+          id="toggle-icon"
+          class="fa-solid fa-moon"
+          onclick="display.toggleMode()"
+        ></i>
+      </div>
       <input
         id="add-todo-input"
         type="text"
