@@ -80,6 +80,10 @@ h1 {
   align-items: center;
 }
 
+.main-container #todo-list li span {
+  overflow-wrap: anywhere;
+}
+
 /* checkbox styling */
 .main-container #todo-list li input[type="checkbox"] {
   border: 2px solid var(--primary-text-color);
@@ -107,4 +111,10 @@ h1 {
 .done {
   text-decoration: line-through;
   opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    width: 100%;
+  }
 }
