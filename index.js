@@ -3,13 +3,18 @@ const todoActions = {
         const addTodoInputEle = document.getElementById('add-todo-input');
         const todoItem = {
             index: todoListActions.getTodoList().length,
-            value
+            value,
+            isDone: false
         }
         if (key === 'Enter') {
             todoListActions.updateTodoList('add', todoItem);
             todoListActions.renderTodoList();
             addTodoInputEle.value = '';
         }
+    },
+
+    update: todoItem => {
+        todoListActions.updateTodoList('update', todoItem);
     },
 
     delete: todoItem => {
@@ -21,10 +26,19 @@ const todoActions = {
 const todoListActions = {
     getTodoList: () => JSON.parse(localStorage.getItem('todoList')) ?? [],
 
-    updateTodoList: (action = 'update', todoItem = { index: '', value: '' }) => {
+    updateTodoList: (action, todoItem) => {
         let todoList = todoListActions.getTodoList();
-        if (action === 'add') todoList.push(todoItem);
-        else if (action === 'delete') todoList = todoList.filter(({ index }) => index !== todoItem.index);
+        if (action === 'add') {
+            todoList.push(todoItem);
+        }
+        else if (action === 'delete') {
+            todoList = todoList.filter(({ index }) => index !== todoItem.index);
+        }
+        else if (action === 'update') {
+            todoList.forEach(item => {
+                if (item.index === todoItem.index) item.isDone = todoItem.isDone;
+            })
+        }
         localStorage.setItem('todoList', JSON.stringify(todoList));
     },
 
