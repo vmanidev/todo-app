@@ -20,6 +20,7 @@ body {
   color: var(--primary-text-color);
   font-family: monospace;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 h1 {
@@ -94,6 +95,8 @@ h1 {
 .main-container #todo-list {
   list-style: none;
   padding: 0;
+  overflow: auto;
+  height: 70dvh;
 }
 
 .main-container #todo-list li {
