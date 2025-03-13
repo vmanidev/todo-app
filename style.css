@@ -129,7 +129,13 @@ h1 {
   color: var(--primary-button-color);
 }
 
-i:hover {
+:is(
+    .fa-solid.fa-trash,
+    .fa-solid.fa-moon,
+    .fa-solid.fa-sun,
+    .fa-solid.fa-pen-to-square,
+    .fa-regular.fa-circle-xmark
+  ):hover {
   cursor: pointer;
   color: var(--accent-color);
 }
